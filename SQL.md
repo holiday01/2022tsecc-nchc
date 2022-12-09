@@ -41,7 +41,7 @@ INNER JOIN mimiciv_hosp.patients p
 ON p.subject_id = a.subject_id;
 ```
 
-## 7 
+## 7 選擇每位患者最初進入醫院的紀錄
 ```
 SELECT p.subject_id, p.dod, a.hadm_id,
     a.admittime, a.hospital_expire_flag,
@@ -52,7 +52,7 @@ ON p.subject_id = a.subject_id
 ORDER BY a.hadm_id, p.subject_id;
 ```
 
-## 8
+## 8 患者如果是傳染性腹瀉進入醫院，存活與死亡人數
 ```
 WITH Infectious AS(
 	SELECT i.*, d.*
