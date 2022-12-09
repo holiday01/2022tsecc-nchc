@@ -61,12 +61,11 @@ WITH Infectious AS(
 	ON i.icd_code = d.icd_code
 	WHERE d.long_title='Infectious diarrhea'
 )
-SELECT a.*
+SELECT a.hospital_expire_flag, COUNT(*)
 FROM Infectious s
 INNER JOIN mimiciv_hosp.admissions a
 ON a.hadm_id = s.hadm_id
-LIMIT 100
-
+GROUP BY a.hospital_expire_flag
 ```
 
 ## 9 實作
