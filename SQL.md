@@ -43,13 +43,13 @@ ON p.subject_id = a.subject_id;
 
 ## 7 選擇每位患者最初進入醫院的紀錄
 ```
-SELECT p.subject_id, p.dod, a.hadm_id,
-    a.admittime, a.hospital_expire_flag,
-    MIN (a.admittime) OVER (PARTITION BY p.subject_id) AS first_admittime
+SELECT p.subject_id, 
+    MIN (a.admittime) AS first_admittime
 FROM mimiciv_hosp.admissions a
 INNER JOIN mimiciv_hosp.patients p
 ON p.subject_id = a.subject_id
-ORDER BY a.hadm_id, p.subject_id;
+GROUP BY p.subject_id
+ORDER BY p.subject_id;
 ```
 
 ## 8 患者如果是傳染性腹瀉進入醫院，存活與死亡人數
