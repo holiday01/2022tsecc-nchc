@@ -73,12 +73,37 @@ GROUP BY a.hospital_expire_flag
 找到labevents的測量項目 (labevents and d_labitems)，限制搜尋100筆
 ```
 
+## 實作9答案
+```
+SELECT l.*, d.label
+FROM mimiciv_hosp.labevents l
+INNER JOIN mimiciv_hosp.d_labitems d
+ON l.itemid = d.itemid
+LIMIT 100
+```
 
 ## 10 實作
 ```
 1. icu patients的年紀，從patients和icustays的年紀
-2. 區分三種情況，小於65歲 (標記 'adult')，65到89 (標記 'old')，等於91 (標記 '>89')
-3. 計算三種情況的人數
+2. 區分三種情況，小於65歲 (adult)，65到89 (old)，等於91 (>89)
+3. 計算三種情況的人術
+```
+## 實作10答案
+```
+WITH EXAMPLE AS
+	(SELECT IE.SUBJECT_ID,
+			IE.HADM_ID,
+			PAT.ANCHOR_AGE AS AGE,
+			CASE
+							WHEN PAT.ANCHOR_AGE < 65 THEN 'adult'
+							WHEN PAT.ANCHOR_AGE = 91 THEN '>89'
+							ELSE 'old'
+			END AS ICUSTAY_AGE_GROUP
+		FROM MIMICIV_ICU.icustays IE
+		INNER JOIN MIMICIV_HOSP.PATIENTS PAT ON IE.SUBJECT_ID = PAT.SUBJECT_ID)
+SELECT ICUSTAY_AGE_GROUP, COUNT(*)
+FROM EXAMPLE
+GROUP BY ICUSTAY_AGE_GROUP
 ```
 
 
