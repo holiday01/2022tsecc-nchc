@@ -41,7 +41,7 @@ INNER JOIN mimiciv_hosp.patients p
 ON p.subject_id = a.subject_id;
 ```
 
-## 6.1 補充，如果要不重複出現6的寫法
+## 6.1 補充6，不重複出現
 ```
 SELECT p.subject_id, p.dod, a.hadm_id,
     a.admittime, a.hospital_expire_flag
