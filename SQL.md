@@ -41,6 +41,16 @@ INNER JOIN mimiciv_hosp.patients p
 ON p.subject_id = a.subject_id;
 ```
 
+## 6.1 補充，如果要不重複出現6的寫法
+```
+SELECT p.subject_id, p.dod, a.hadm_id,
+    a.admittime, a.hospital_expire_flag
+FROM mimiciv_hosp.admissions a
+INNER JOIN mimiciv_hosp.patients p
+ON p.subject_id = a.subject_id
+GROUP BY p.subject_id, a.hadm_id, p.dod, a.admittime, a.hospital_expire_flag
+```
+
 ## 7 選擇每位患者最初進入醫院的紀錄
 ```
 SELECT p.subject_id, 
